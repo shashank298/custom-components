@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock using JS & CSS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="clock">
+        <div class="clock-face">
+            <div class="hand hour-hand"></div>
+            <div class="hand min-hand"></div>
+            <div class="hand second-hand"></div>
+        </div>
+       
+    </div>
+    <div class="time">
+        <div class="hour"></div><span class="separator">:</span>
+        <div class="min"></div><span class="separator">:</span>
+        <div class="second"></div>
+    </div>
+    <script>
+        // Access min hand & rotate it on every second
+        function setTime(sec, min, hour){
+            const secondEl = document.querySelector(".second")
+            const minEl = document.querySelector(".min")
+            const hourEl = document.querySelector(".hour")
+
+            secondEl.innerHTML = sec <10 ? `0${sec}` : sec;
+            minEl.innerHTML = min <10 ? `0${min}` : min;
+            hourEl.innerHTML = hour <10 ? `0${hour}` : hour;
+        }
+
+        function setClockTime(){
+            const secondHand = document.querySelector(".second-hand")
+            const minHand = document.querySelector(".min-hand")
+            const hourHand = document.querySelector(".hour-hand")
+           
+
+            const date = new Date()
+            const seconds = date.getSeconds()
+            const minutes = date.getMinutes()
+            const hours = date.getHours()
+
+            setTime(seconds, minutes, hours)
+
+            const secondsDegree = 90 + (seconds/60)*360
+            secondHand.style.transform = `rotate(${secondsDegree}deg)`
+           
+            const minutesDegree = 90 + (minutes/60)*360
+            minHand.style.transform = `rotate(${minutesDegree}deg)`
+           
+            const hoursDegree = 90 + (hours/60)*360
+            hourHand.style.transform = `rotate(${hoursDegree}deg)`
+        }
+        setInterval(setClockTime, 1000)
+    </script>
+</body>
+
+</html>
