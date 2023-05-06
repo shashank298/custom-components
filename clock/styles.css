@@ -1,0 +1,69 @@
+html{
+    background: url(https://unsplash.it/1500/1000?image=881&blur=5);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+body{
+    padding: 0;
+    margin: 0;
+    font-size: 2rem;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.clock{
+    width: 20rem;
+    height: 20rem;
+    border: 10px solid white;
+    border-radius: 50%;
+    padding: 1rem;
+    box-shadow:
+      0 0 0 4px rgba(0,0,0,0.1),
+      inset 0 0 0 3px #EFEFEF,
+      inset 0 0 10px black,
+      0 0 10px rgba(0,0,0,0.2);
+    background: rgb(120 120 120 / 26%);
+}
+
+.clock-face{
+    transform: translateY(-3px);
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.hand{
+    width: 50%;
+    height: 4px;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    transform: rotate(90deg);
+    transform-origin: 100%;
+}
+
+.time{
+    display: flex;
+    padding: 8px;
+    background: white;
+    margin-top:36px ;
+}
+
+.hour,.min,.second{
+    border: 4px solid #afacac;
+    border-radius: 5%;
+    box-shadow:
+      0 0 10px rgba(0,0,0,0.2);
+    padding: 6px;  
+}
+
+.separator{
+    padding: 4px;
+    padding-top: 6px;  
+}
