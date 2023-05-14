@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type-ahead</title>
+    <link href='https://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="search-container">
+            <input type="text" class="search" placeholder="Filter for a city or state"/>
+            <div class="suggestions">
+                <ol class="list">
+                </ol>
+            </div>
+        </div>
+        <div class="data-container"></div>
+    </div>
+
+    <script>
+        const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+        const list = []
+
+        function getCountriesList (){
+           fetch(endpoint).then(res => res.json()).then((data) =>list.push(...data)).catch(err => alert(err))
+        }
+        function getFilteredList(searchText){
+            return list.filter(item => {
+                const regex = new RegExp(searchText, 'gi');
+                return item.city.match(regex) || item.state.match(regex)
+           })
+        }
+        function searchText(e){
+           const filteredList = getFilteredList(this.value)
+           const html = this.value ? filteredList.map(item => {
+            const regex = new RegExp(this.value,'gi')
+            const cityName = item.city.replace(regex, `<span class="h1">${this.value}</span>`)
+            const stateName = item.state.replace(regex, `<span class="h1">${this.value}</span>`)
+            return `
+                <li class="item">
+                   ${cityName}, ${stateName}
+                </li>
+            `
+           }).join("") : ""
+           suggestions.innerHTML = html;
+        }
+
+        getCountriesList()
+        const search = document.querySelector(".search")
+        const suggestions = document.querySelector(".list")
+        search.addEventListener("input",searchText)
+    </script>
+</body>
+</html>
