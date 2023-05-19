@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overlapping-circles</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="container"></div>
+    <script>
+      const circles = [];
+      const CIRCLE_RADIUS = 50;
+      const container = document.querySelector(".container");
+
+      const drawCircles = (circle) => {
+        var newCircle = document.createElement("div");
+        newCircle.setAttribute("class", "circle");
+        newCircle.style.top = `${circle.top}px`;
+        newCircle.style.left = `${circle.left}px`;
+        newCircle.style.background = circle.color;
+        container.appendChild(newCircle);
+      };
+
+      const checkOverlapping = (circle) => {
+        for (let i = 0; i < circles.length; i++) {
+          if (
+            !(
+              circle.top > circles[i].bottom ||
+              circle.right < circles[i].left ||
+              circle.bottom < circles[i].top ||
+              circle.left > circles[i].right
+            )
+          ) {
+              return true
+          }
+        }
+        return false
+      };
+
+      container.addEventListener("click", (e) => {
+        const { clientX, clientY } = e;
+        const circleObj = {
+          top: clientY - CIRCLE_RADIUS,
+          left: clientX - CIRCLE_RADIUS,
+          bottom: clientY - CIRCLE_RADIUS + 2 * CIRCLE_RADIUS,
+          right: clientX - CIRCLE_RADIUS + 2 * CIRCLE_RADIUS,
+          
+        };
+        const isOverLapping = checkOverlapping(circleObj);
+        console.log({isOverLapping})
+        circles.push(circleObj);
+        drawCircles({...circleObj, color: isOverLapping ? "green" : "red"});
+      });
+    </script>
+  </body>
+</html>
