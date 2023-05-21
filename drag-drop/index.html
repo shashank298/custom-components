@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag & Drop</title>
+    <link rel="stylesheet" href="./styles.css" >
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <h4>To Do</h4>
+                <p class="draggable" draggable="true">1</p>
+                <p class="draggable" draggable="true">2</p>
+        </div>
+        <div class="container">
+            <h4>Doing</h4>
+           
+                <p class="draggable" draggable="true">1</p>
+                <p class="draggable" draggable="true">2</p>
+           
+        </div>
+        <div class="container">
+            <h4>Done</h4>
+           
+                <p class="draggable" draggable="true">P1</p>
+                <p class="draggable" draggable="true">P2</p>
+           
+        </div>
+    </div>
+
+    <script>
+        const containers = document.querySelectorAll(".container")
+        const draggables = document.querySelectorAll(".draggable")
+
+        draggables.forEach((draggable) => {
+
+            draggable.addEventListener("dragstart", function(){
+                this.classList.add("dragging")
+            })
+
+            draggable.addEventListener("dragend", function(){
+                this.classList.remove("dragging")
+            })
+
+        })
+
+        containers.forEach((container)=>{
+            container.addEventListener("dragover",function(e){
+                e.preventDefault()
+                
+                const closestEl = getDragElementAfter(container, e.clientY)
+                const draggable = document.querySelector(".dragging")
+                if(!closestEl){
+                   container.appendChild(draggable)
+                }else{
+                    container.insertBefore(draggable, closestEl)
+                }
+                
+            })
+        })
+
+        function getDragElementAfter(container, y){
+            const draggableElements = container.querySelectorAll(".draggable:not(.dragging)")
+            let closestEl = null
+            let closestOffset = Number.NEGATIVE_INFINITY
+            draggableElements.forEach((child) => {
+                
+                const {top} = child.getBoundingClientRect()
+                const offset = y-top
+                if(offset<0 && offset > closestOffset){
+                    closestEl = child
+                    closestOffset = offset
+                }
+            })
+           return closestEl
+        }
+
+    </script>
+</body>
+</html>
