@@ -1,0 +1,36 @@
+*{
+    box-sizing: border-box;
+}
+
+:root{
+    --primary-color:rgba(29, 33, 37);
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: var(--primary-color);
+    color: white;
+}
+.wrapper{
+    display: flex;
+    gap: 12px;
+    margin: 16px;
+}
+
+.container{
+    flex-basis: 400px;
+    padding: 8px;
+    border: 1px solid rgb(132, 132, 132);
+    border-radius: 10px;
+}
+
+.draggable{
+    background-color: whitesmoke;
+    color: var(--primary-color);
+    padding: 12px;
+}
+
+.dragging {
+    opacity: 0.5;
+}
