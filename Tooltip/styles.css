@@ -1,0 +1,29 @@
+
+.tooltip{
+    cursor:pointer;
+    display: inline-block;
+    margin:100px;
+    position: relative;
+}
+
+.tooltip:hover:before{
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -12px;
+    transform: translateY(-100%);
+    background-color: #333;
+    padding: 8px;
+    color: aliceblue;
+    border-radius: 10px;
+}
+
+.tooltip:hover:after{
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: -4px;
+    transform: translateY(-100%) translateX(100%) rotate(45deg);
+    background-color: #333;
+    padding: 8px;
+    
+}
