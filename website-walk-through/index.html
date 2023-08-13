@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>website-walk-through</title>
+    <link rel="stylesheet" href="./index.css" />
+</head>
+
+<body>
+    <section id="wrapper">
+        <section class="box" id="one">1</section>
+        <section class="box" id="two">2</section>
+        <section class="box" id="three">3</section>
+        <section class="box" id="four">4</section>
+        <section class="box" id="five">5</section>
+        <section class="box" id="six">6</section>
+        <section class="box" id="seven">7</section>
+        <section class="box" id="eight">8</section>
+        <section class="box" id="nine">9</section>
+        <section class="box" id="ten">10</section>
+        <section class="box" id="eleven">11</section>
+        <section class="box" id="twelve">12</section>
+        <section class="box" id="thirteen">13</section>
+        <section class="box" id="fourteen">14</section>
+        <section class="box" id="fifteen">15</section>
+        <section class="box" id="sixteen">16</section>
+        <section class="box" id="seventeen">17</section>
+        <section class="box" id="eightteen">18</section>
+        <section class="box" id="ninteen">19</section>
+        <section class="box" id="twenty">20</section>
+    </section>
+    <script>
+        // highlight the target element - done
+        // show modal below the target element & give an option to move next & back
+        // scroll to the target if it's not visible in the viewport 
+        let currentIndex = 0
+        const target = ["three", "two", "one", "ten", "eight", "eleven", "twenty", "one"]
+
+        function createHighlighter(el) {
+            const { top, left, height, width } = el.getBoundingClientRect()
+            const div = document.createElement('div')
+            div.id = "highlighter"
+            div.style = `position:absolute; left:${left - 4 + window.scrollX}px; top:${top - 4 + window.scrollY}px; height:${height}px; width:${width}px; border:4px solid black;`
+            return div
+        }
+
+        function createPopover(el) {
+            const { bottom, left, width } = el.getBoundingClientRect()
+            const div = document.createElement('div')
+            div.id = "highlighter-popover"
+            div.style = `position:absolute; left:${left + width / 2 - 150 +  + window.scrollX}px; top:${bottom + 8 + window.scrollY}px; height:80px; width:300px; background:white; display:flex;align-items:center;justify-content:center;`
+
+            const btnWrapper = document.createElement('div')
+            const nextBtn = document.createElement('button')
+            nextBtn.id = "next-btn"
+            nextBtn.textContent = "next"
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex !== target.length - 1) {
+                    currentIndex += 1;
+                    createWalkThrough(target[currentIndex])
+                }
+            })
+            const prevBtn = document.createElement('button')
+            prevBtn.id = "prev-btn"
+            prevBtn.textContent = "prev"
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex !== 0) {
+                    currentIndex -= 1;
+                    createWalkThrough(target[currentIndex])
+                }
+            })
+            btnWrapper.appendChild(prevBtn)
+            btnWrapper.appendChild(nextBtn)
+            div.appendChild(btnWrapper)
+            return div
+        }
+
+        function createWalkThrough(id) {
+            document.getElementById("highlighter")?.remove();
+            document.getElementById("highlighter-popover")?.remove();
+            const target = document.getElementById(id)
+            const fragment = document.createDocumentFragment()
+            const highlighter = createHighlighter(target)
+            const popover = createPopover(target)
+            focus(target);
+            fragment.appendChild(highlighter)
+            fragment.appendChild(popover)
+            document.getElementById("wrapper").appendChild(fragment);
+        }
+
+        function focus(target){
+            const top = target.offsetTop;
+            window.scrollTo({top,behavior:"smooth"})
+        }
+        createWalkThrough(target[currentIndex])
+    </script>
+</body>
+
+</html>
