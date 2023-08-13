@@ -1,0 +1,15 @@
+.box{
+    width: 850px;
+    height: 200px;
+    background-color: bisque;
+    font-size: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#wrapper{
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
