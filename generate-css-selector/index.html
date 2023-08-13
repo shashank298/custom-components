@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+        <article>Prepare for interview</article>
+        <section>
+            on
+            <p>
+                <span>
+                    Test
+                    <button>click me!</button>
+                    <button id="target">
+                        click me 2!
+                        <span>dasdsa </span>
+                    </button>
+                </span>
+            </p>
+        </section>
+    </div>
+    <script>
+        function generateCssSelector(root, target) {
+            const paths = [];
+            while (root !== target) {
+                const nth = Array.from(target.parentNode.children).indexOf(target) + 1;
+                const className = `${target.tagName.toLowerCase()}:nth-child(${nth})`;
+                paths.unshift(className);
+                target = target.parentNode;
+            }
+            const rootClassName = `${target.tagName.toLowerCase()}[id="${target.id}"]`;
+            paths.unshift(rootClassName);
+            return paths.join(" > ");
+        }
+        const root = document.querySelector("#root");
+        const target = document.querySelector("#target");
+
+        console.log(generateCssSelector(root, target));
+    </script>
+</body>
+
+</html>
